@@ -10,12 +10,12 @@ import java.util.List;
 @RestController
 @AllArgsConstructor
 @RequestMapping(path = "api/v1/pnc")
-public class AppUserController {
+public class UserController {
 
-    private final AppUserService appUserService;
+    private final UserService appUserService;
 
     @GetMapping
-    public List<AppUser> getAppUsers() {
+    public List<User> getAppUsers() {
         return appUserService.getAllAppUsers();
     }
 

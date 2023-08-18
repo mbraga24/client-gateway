@@ -1,6 +1,6 @@
 package com.pnc.appuser;
 
-public enum AppUserRole {
+public enum UserRole {
     USER,
     ADMIN
 }

@@ -1,17 +1,14 @@
 package com.pnc;
 
-import com.pnc.appuser.AppUser;
-import com.pnc.appuser.AppUserRepository;
-import com.pnc.appuser.AppUserRole;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
+import com.pnc.appuser.User;
+import com.pnc.appuser.UserRepository;
+import com.pnc.appuser.UserRole;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
 
-import java.lang.module.Configuration;
 import java.util.List;
 
 @SpringBootApplication
@@ -25,25 +22,25 @@ public class SpringPncApplication {
 	}
 
 	@Bean
-	CommandLineRunner runner(AppUserRepository appUserRepository) {
+	CommandLineRunner runner(UserRepository userRepository) {
 		return args -> {
-			AppUser marlon = new AppUser("Marlon",
+			User marlon = new User("Marlon",
 					"marlonRice",
 					"marlon@email.com",
 					"password",
-					AppUserRole.ADMIN,
+					UserRole.ADMIN,
 					false,
 					true);
-			AppUser dave = new AppUser("Dave",
+			User dave = new User("Dave",
 			"daveBean",
 			"dave@email.com",
 			"password",
-			AppUserRole.USER,
+			UserRole.USER,
 			false,
 			true);
 
-			List<AppUser> appUsers = List.of(marlon, dave);
-			appUserRepository.saveAll(appUsers);
+			List<User> users = List.of(marlon, dave);
+			userRepository.saveAll(users);
 		};
 	}
 
