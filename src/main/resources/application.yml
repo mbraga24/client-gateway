@@ -4,10 +4,16 @@ server:
     include-message: always
 
 spring:
+  security:
+    user:
+      name: user
+      password: password
+
   datasource:
-    url: jdbc:postgresql://localhost:5332/registration
-    username: marlonpnc
+    url: jdbc:postgresql://localhost:5432/registration
+    username: marlondb
     password: password
+
   jpa:
     hibernate:
       ddl-auto: create-drop
