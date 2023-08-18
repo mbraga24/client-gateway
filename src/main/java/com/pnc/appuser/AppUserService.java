@@ -1,22 +1,20 @@
 package com.pnc.appuser;
 
 import lombok.AllArgsConstructor;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-@Service
+import java.util.List;
+
+//public class AppUserService {
 @AllArgsConstructor
-public class AppUserService implements UserDetailsService {
+@Service
+public class AppUserService {
 
-    private final AppUserRepository appUserRepository;
+    private final AppUserDAO appUserDAO;
 
-    @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        return appUserRepository.findByEmail(email)
-                .orElseThrow(() ->
-                        new UsernameNotFoundException(
-                                String.format("User with email %s not found", email)));
+    public List<AppUser> getAllAppUsers() {
+        return appUserDAO.selectAllAppUsers();
     }
+
+
 }
