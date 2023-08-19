@@ -35,6 +35,25 @@
 			<artifactId>jjwt</artifactId>
 			<version>0.9.1</version>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt-impl
+				JJWT, a Java JWT library, maintains semantic versioning for most components,
+				excluding the internal jjwt-impl.jar, which can change without adhering to
+				versioning rules. To prevent tight coupling, incorporate jjwt-impl using
+				runtime scope, not compile scope. This approach ensures flexibility in
+				handling potential changes and promotes compatibility the project.
+		-->
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt-impl</artifactId>
+			<version>0.11.5</version>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt-jackson</artifactId>
+			<version>0.11.5</version>
+			<scope>runtime</scope>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
