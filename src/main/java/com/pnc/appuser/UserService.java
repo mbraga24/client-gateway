@@ -15,5 +15,4 @@ public class UserService {
         return userDAO.selectAllAppUsers();
     }
 
-
 }
