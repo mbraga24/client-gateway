@@ -8,6 +8,7 @@ import io.jsonwebtoken.security.Keys;
 import java.security.Key;
 import java.security.KeyStore;
 import java.util.Base64;
+import java.util.function.Function;
 
 @Service
 public class JwtService {
@@ -16,7 +17,12 @@ public class JwtService {
     private static final String SECRET_KEY = "5cbd389af4f3e3a38cbc115e5d44a9dae1684f2c0ffa4552df623de3c8a40baa";
 
     public String extractUsername(String token) {
-        return null;
+        return extractClaim(token, Claims::getSubject);
+    }
+
+    public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
+        final Claims claims = extractAllClaims(token);
+        return claimsResolver(claims);
     }
 
     /**
