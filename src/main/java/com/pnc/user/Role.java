@@ -1,6 +1,6 @@
 package com.pnc.user;
 
-public enum UserRole {
+public enum Role {
     USER,
     ADMIN
 }
