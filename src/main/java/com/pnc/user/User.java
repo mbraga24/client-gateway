@@ -20,13 +20,13 @@ public class User implements UserDetails {
 
     @Id
     @SequenceGenerator(
-            name = "client_sequence",
-            sequenceName = "client_sequence",
+            name = "user_sequence_generator",
+            sequenceName = "user_id_sequence",
             allocationSize = 1
     )
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,
-            generator = "client_sequence"
+            generator = "user_sequence_generator"
     )
     private Long id;
     private String firstName;
@@ -35,24 +35,24 @@ public class User implements UserDetails {
     private String email;
     private String password;
     @Enumerated(EnumType.STRING)
-    private UserRole userRole;
+    private Role role;
     private Boolean locked;
     private Boolean enabled;
 
-    public User(String firstName, String lastName, String username, String email, String password, UserRole userRole, Boolean locked, Boolean enabled) {
+    public User(String firstName, String lastName, String username, String email, String password, Role role, Boolean locked, Boolean enabled) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.username = username;
         this.email = email;
         this.password = password;
-        this.userRole = userRole;
+        this.role = role;
         this.locked = locked;
         this.enabled = enabled;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority(userRole.name()));
+        return List.of(new SimpleGrantedAuthority(role.name()));
     }
 
     @Override
