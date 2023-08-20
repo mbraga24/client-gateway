@@ -24,14 +24,16 @@ public class SpringPncApplication {
 	@Bean
 	CommandLineRunner runner(UserRepository userRepository) {
 		return args -> {
-			User marlon = new User("Marlon",
-					"marlonRice",
-					"marlon@email.com",
+			User marlon = new User("Kevin",
+					"Rice",
+					"kevinRice",
+					"kevin@email.com",
 					"password",
 					UserRole.ADMIN,
 					false,
 					true);
 			User dave = new User("Dave",
+			"Bean",
 			"daveBean",
 			"dave@email.com",
 			"password",
