@@ -2,7 +2,7 @@ package com.pnc.auth;
 
 import com.pnc.user.User;
 import com.pnc.user.UserRepository;
-import com.pnc.user.UserRole;
+import com.pnc.user.Role;
 import com.pnc.config.JwtService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -25,7 +25,7 @@ public class AuthenticationService {
                 .lastName(request.getLastName())
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
-                .userRole((UserRole.USER))
+                .role((Role.USER))
                 .build();
         userRepository.save(user);
         var jwtToken = jwtService.generateToken(user);

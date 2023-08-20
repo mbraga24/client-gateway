@@ -28,7 +28,7 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
-                .securityMatcher("/api/v*/auth/**")
+                .securityMatcher("/api/v1/auth/**")
                 .authorizeHttpRequests((authorize) -> authorize
                         .anyRequest()
                         .authenticated()
@@ -38,8 +38,6 @@ public class SecurityConfiguration {
                 )
                 .authenticationProvider(authenticationProvider)
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
-
-                // we don't require authentication or JWT Token if we're creating an account or logging in - these two endpoints will be whitelisted
 
         return httpSecurity.build();
     }
