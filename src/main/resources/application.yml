@@ -4,11 +4,6 @@ server:
     include-message: always
 
 spring:
-  security:
-    user:
-      name: user
-      password: password
-
   datasource:
     url: jdbc:postgresql://localhost:5432/registration
     username: marlondb
