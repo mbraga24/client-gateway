@@ -29,7 +29,8 @@ public class User implements UserDetails {
             generator = "client_sequence"
     )
     private Long id;
-    private String name;
+    private String firstName;
+    private String lastName;
     private String username;
     private String email;
     private String password;
@@ -38,8 +39,9 @@ public class User implements UserDetails {
     private Boolean locked;
     private Boolean enabled;
 
-    public User(String name, String username, String email, String password, UserRole userRole, Boolean locked, Boolean enabled) {
-        this.name = name;
+    public User(String firstName, String lastName, String username, String email, String password, UserRole userRole, Boolean locked, Boolean enabled) {
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.username = username;
         this.email = email;
         this.password = password;
