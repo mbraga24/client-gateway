@@ -1,9 +1,8 @@
 package com.pnc.auth;
 
-import com.pnc.appuser.User;
-import com.pnc.appuser.UserRepository;
-import com.pnc.appuser.UserRole;
-import com.pnc.config.ApplicationConfig;
+import com.pnc.user.User;
+import com.pnc.user.UserRepository;
+import com.pnc.user.UserRole;
 import com.pnc.config.JwtService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;

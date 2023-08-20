@@ -1,6 +1,6 @@
 package com.pnc.config;
 
-import com.pnc.appuser.UserRepository;
+import com.pnc.user.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

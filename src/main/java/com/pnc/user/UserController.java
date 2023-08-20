@@ -1,4 +1,4 @@
-package com.pnc.appuser;
+package com.pnc.user;
 
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;

@@ -1,8 +1,8 @@
 package com.pnc;
 
-import com.pnc.appuser.User;
-import com.pnc.appuser.UserRepository;
-import com.pnc.appuser.UserRole;
+import com.pnc.user.User;
+import com.pnc.user.UserRepository;
+import com.pnc.user.UserRole;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

@@ -1,4 +1,4 @@
-package com.pnc.appuser;
+package com.pnc.user;
 
 import java.util.List;
 
