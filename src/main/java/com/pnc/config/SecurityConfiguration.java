@@ -3,6 +3,7 @@ package com.pnc.config;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -20,16 +21,22 @@ public class SecurityConfiguration {
 
     /**
      * At the application start Spring Security will try to find for a Bean of type
-     * security filter chain. The security filter chain is the Bean responsible of
+     * security filter chain. The security filter chain is the Bean responsible for
      * configuring all the HTTP security of our application.
      *
      * https://docs.spring.io/spring-security/reference/5.8/servlet/authorization/authorize-http-requests.html#_request_matchers
+     * https://stackoverflow.com/questions/73107059/disable-csrf-cors-in-spring-boot-spring-security-5-7-and-saml
      */
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
-                .securityMatcher("/api/v1/auth/**")
+                .csrf(csrf -> csrf.disable())
+//                .securityMatcher("/api/v1/auth/**")
                 .authorizeHttpRequests((authorize) -> authorize
+                        .requestMatchers(HttpMethod.GET, "/public/**")
+                        .permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/v1/authentication/**")
+                        .permitAll()
                         .anyRequest()
                         .authenticated()
                 )
