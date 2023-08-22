@@ -10,6 +10,8 @@ import io.jsonwebtoken.security.Keys;
 import java.security.Key;
 import java.security.KeyStore;
 import java.security.Signature;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.Base64;
 import java.util.Date;
 import java.util.HashMap;
@@ -41,7 +43,8 @@ public class JwtService {
                 .setClaims(extraClaims)
                 .setSubject(userDetails.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 300_000))
+                .setExpiration(
+                        Date.from(Instant.now().plus(1, ChronoUnit.DAYS)))
                 .signWith(SignatureAlgorithm.HS256, getSigningKey())
                 .compact();
     }
