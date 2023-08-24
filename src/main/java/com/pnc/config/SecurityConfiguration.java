@@ -10,10 +10,13 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
-import static org.springframework.security.web.util.matcher.AntPathRequestMatcher.antMatcher;
-
+/**
+ * The SecurityConfiguration class provides a bean that configures a security filter chain
+ * using Spring Security's Java-based configuration. This filter chain specifies how incoming
+ * HTTP requests should be handled in terms of authentication, authorization, and other
+ * security-related aspects.
+ */
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
