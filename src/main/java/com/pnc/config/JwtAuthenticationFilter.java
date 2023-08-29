@@ -1,6 +1,5 @@
 package com.pnc.config;
 
-import com.pnc.auth.RegisterRequest;
 import com.pnc.clientinfo.ClientInfo;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -18,6 +17,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+
 
 /**
  * The JwtAuthenticationFilter custom filter is executed before Global filters
@@ -41,31 +41,24 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         final String authHeader = request.getHeader("Authorization");
         final String ipAddresses = request.getHeader("X-Forwarded-For");
-        String clientIpAddress = null;
         final String jwt;
         final String userEmail;
         final String requestURI = request.getRequestURI().toString();
-        RegisterRequest requestPayload;
-        String endpoint = requestURI.substring(requestURI.lastIndexOf("/") + 1);
 
-        log.info("requestURI ============> {}",requestURI);
-        log.info("ipAddresses ============> {}", ipAddresses);
+        String endpoint = requestURI.substring(requestURI.lastIndexOf("/") + 1);
+        String clientIpAddress = null;
 
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
 
             if (endpoint.equals("register")) {
-
                 if (ipAddresses == null || ipAddresses.isBlank()) {
                     clientIpAddress = request.getRemoteAddr();
                     clientInfo.setClientIpAddress(clientIpAddress);
-                    log.info("REASSIGNMENT -- clientIpAddress :: {}", clientIpAddress);
                 } else {
                     clientIpAddress = ipAddresses.split(",")[0].trim();
                     clientInfo.setClientIpAddress(clientIpAddress);
-                    log.info("clientIpAddress :: {}", clientIpAddress);
                 }
             }
-
             filterChain.doFilter(request, response);
             return;
         }
