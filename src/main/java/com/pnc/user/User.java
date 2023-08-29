@@ -1,6 +1,7 @@
 package com.pnc.user;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -9,8 +10,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.List;
 
-@Data
-@EqualsAndHashCode
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -29,10 +30,14 @@ public class User implements UserDetails {
             generator = "user_sequence_generator"
     )
     private Long id;
+    @NotBlank
     private String firstName;
+    @NotBlank
     private String lastName;
     private String username;
+    @NotBlank
     private String email;
+    @NotBlank
     private String password;
     @Enumerated(EnumType.STRING)
     private Role role;
