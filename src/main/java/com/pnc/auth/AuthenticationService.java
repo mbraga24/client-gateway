@@ -1,15 +1,19 @@
 package com.pnc.auth;
 
+import com.pnc.config.PasswordValidationService;
+import com.pnc.exception.InvalidPasswordRequirements;
 import com.pnc.user.User;
 import com.pnc.user.UserRepository;
 import com.pnc.user.Role;
 import com.pnc.config.JwtService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class AuthenticationService {
@@ -18,8 +22,14 @@ public class AuthenticationService {
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
+    private final PasswordValidationService passwordValidationService;
 
     public AuthenticationResponse register(RegisterRequest request) {
+
+        if (!passwordValidationService.isPasswordValid(request.getPassword())) {
+            throw new InvalidPasswordRequirements("Invalid password requirements.");
+        }
+
         var user = User.builder()
                 .firstName(request.getFirstName())
                 .lastName(request.getLastName())
