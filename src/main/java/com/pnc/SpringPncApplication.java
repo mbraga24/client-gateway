@@ -30,19 +30,19 @@ public class SpringPncApplication {
 	CommandLineRunner runner(UserRepository userRepository) {
 		return args -> {
 			User kevin = new User("Kevin",
-					"Rice",
-					"kevinRice",
-					"kevin@email.com",
-					passwordEncoder.encode("password"),
-					Role.ADMIN,
-					false,
-					true);
+			"Rice",
+			"kevinRice",
+			"kevin@email.com",
+			passwordEncoder.encode("C0mpl3x#Pa$$"),
+			Role.ADMIN,
+			false,
+			true);
 
 			User dave = new User("Dave",
 			"Bean",
 			"daveBean",
 			"dave@email.com",
-			passwordEncoder.encode("password"),
+			passwordEncoder.encode("C0mpl3x#Pa$$"),
 			Role.USER,
 			false,
 			true);
