@@ -54,9 +54,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 if (ipAddresses == null || ipAddresses.isBlank()) {
                     clientIpAddress = request.getRemoteAddr();
                     clientInfo.setClientIpAddress(clientIpAddress);
+//                    clientInfo.setClientIpAddress("100.42.20.0"); // "Canada"
                 } else {
                     clientIpAddress = ipAddresses.split(",")[0].trim();
                     clientInfo.setClientIpAddress(clientIpAddress);
+//                    clientInfo.setClientIpAddress("100.42.20.0"); // "Canada"
                 }
             }
             filterChain.doFilter(request, response);
@@ -65,7 +67,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         jwt = authHeader.substring(7);
         userEmail = jwtService.extractUsername(jwt);
         log.info("userEmail: {}", userEmail);
-        clientIpAddress = request.getHeader("X-Forwarded-For");
 
         // if userEmail exists but user is not authenticated
         if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
