@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import reactor.core.publisher.Mono;
 
 @Slf4j
 @RestController
@@ -19,9 +20,11 @@ public class AuthenticationController {
     private final ClientInfo clientInfo;
 
     @PostMapping("/register")
-    public ResponseEntity<AuthenticationResponse> register(@RequestBody RegisterRequest request) {
+    public Mono<ResponseEntity<AuthenticationResponse>> register(@RequestBody RegisterRequest request) {
         log.info("clientInfo :: ============> {}", clientInfo.getClientIpAddress());
-        return ResponseEntity.ok(authService.register(request));
+//        return ResponseEntity.ok(authService.register(request, clientInfo.getClientIpAddress()));
+
+        return authService.register(request, clientInfo.getClientIpAddress()).map(ResponseEntity::ok);
     }
 
     @PostMapping("/authenticate")
