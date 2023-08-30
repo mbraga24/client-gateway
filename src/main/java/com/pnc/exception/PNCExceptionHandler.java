@@ -39,6 +39,17 @@ public class PNCExceptionHandler {
         return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(NotEligibleToRegister.class)
+    public ResponseEntity<ErrorResponse> handleNotEligibleToRegister(NotEligibleToRegister ex) {
+        ErrorResponse errorResponse = new ErrorResponse(
+             HttpStatus.FORBIDDEN.getReasonPhrase(),
+             HttpStatus.FORBIDDEN.value(),
+             ex.getMessage(),
+             System.currentTimeMillis()
+        );
+        return new ResponseEntity<>(errorResponse, HttpStatus.FORBIDDEN);
+    }
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponse> handleGlobalException(Exception ex, WebRequest request) {
         ErrorResponse errorResponse = new ErrorResponse(
