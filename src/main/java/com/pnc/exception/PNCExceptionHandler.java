@@ -1,20 +1,17 @@
 package com.pnc.exception;
 
+import com.pnc.exception.custom.*;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 
-import java.util.HashMap;
-import java.util.Map;
-
 @RestControllerAdvice
 public class PNCExceptionHandler {
 
-    @ExceptionHandler(InvalidPasswordException.class)
-    public ResponseEntity<ErrorResponse> handleInvalidPasswordException(InvalidPasswordException ex, WebRequest request) {
+    @ExceptionHandler(InvalidCredentialsException.class)
+    public ResponseEntity<ErrorResponse> handleInvalidPasswordException(InvalidCredentialsException ex) {
         ErrorResponse errorResponse = new ErrorResponse(
                 HttpStatus.BAD_REQUEST.getReasonPhrase(),
                 HttpStatus.BAD_REQUEST.value(),
@@ -24,8 +21,8 @@ public class PNCExceptionHandler {
         return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler(InvalidPasswordRequirements.class)
-    public ResponseEntity<ErrorResponse> handleInvalidPasswordRequirements(InvalidPasswordRequirements ex) {
+    @ExceptionHandler(InvalidPasswordRequirementsException.class)
+    public ResponseEntity<ErrorResponse> handleInvalidPasswordRequirements(InvalidPasswordRequirementsException ex) {
         ErrorResponse errorResponse = new ErrorResponse(
                 HttpStatus.BAD_REQUEST.getReasonPhrase(),
                 HttpStatus.BAD_REQUEST.value(),
@@ -39,8 +36,8 @@ public class PNCExceptionHandler {
         return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler(NotEligibleToRegister.class)
-    public ResponseEntity<ErrorResponse> handleNotEligibleToRegister(NotEligibleToRegister ex) {
+    @ExceptionHandler(NotEligibleToRegisterException.class)
+    public ResponseEntity<ErrorResponse> handleNotEligibleToRegister(NotEligibleToRegisterException ex) {
         ErrorResponse errorResponse = new ErrorResponse(
              HttpStatus.FORBIDDEN.getReasonPhrase(),
              HttpStatus.FORBIDDEN.value(),
@@ -48,6 +45,28 @@ public class PNCExceptionHandler {
              System.currentTimeMillis()
         );
         return new ResponseEntity<>(errorResponse, HttpStatus.FORBIDDEN);
+    }
+
+    @ExceptionHandler(UserNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleUserNotFound(UserNotFoundException ex) {
+        ErrorResponse errorResponse = new ErrorResponse(
+                HttpStatus.BAD_REQUEST.getReasonPhrase(),
+                HttpStatus.BAD_REQUEST.value(),
+                ex.getMessage(),
+                System.currentTimeMillis()
+        );
+        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(UserExistsException.class)
+    public ResponseEntity<ErrorResponse> handleUserExistsException(UserExistsException ex) {
+        ErrorResponse errorResponse = new ErrorResponse(
+                HttpStatus.CONFLICT.getReasonPhrase(),
+                HttpStatus.CONFLICT.value(),
+                ex.getMessage(),
+                System.currentTimeMillis()
+        );
+        return new ResponseEntity<>(errorResponse, HttpStatus.CONFLICT);
     }
 
     @ExceptionHandler(Exception.class)
