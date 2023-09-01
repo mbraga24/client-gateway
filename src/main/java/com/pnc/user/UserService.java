@@ -11,8 +11,13 @@ public class UserService {
 
     private final UserDAO userDAO;
 
-    public List<User> getAllAppUsers() {
-        return userDAO.selectAllAppUsers();
+    public List<User> getAllUsers() {
+        return userDAO.getAllUsers();
     }
+
+    public boolean isEmailTaken(String email) {
+        return userDAO.isEmailTaken(email);
+    }
+
 
 }

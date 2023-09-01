@@ -2,8 +2,8 @@ package com.pnc.auth;
 
 import com.pnc.config.JwtService;
 import com.pnc.config.PasswordValidationService;
-import com.pnc.exception.InvalidPasswordRequirements;
-import com.pnc.exception.NotEligibleToRegister;
+import com.pnc.exception.custom.InvalidPasswordRequirementsException;
+import com.pnc.exception.custom.UserExistsException;
 import com.pnc.ipapi.IPApiResponse;
 import com.pnc.ipapi.IPApiService;
 import com.pnc.user.Role;
@@ -16,8 +16,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import reactor.core.Disposable;
-import reactor.core.publisher.Mono;
 
 @Slf4j
 @Service
@@ -32,26 +30,26 @@ public class AuthenticationService {
     private final IPApiService ipApiService;
     private final ValidationUtils validationUtils;
 
-    public Mono<AuthenticationResponse> register(RegisterRequest request, String userIpAddress) {
+    public AuthenticationResponse register(RegisterRequest request, String userIpAddress) {
+        IPApiResponse response = ipApiService.ipAPICall(userIpAddress);
 
-        return ipApiService.ipAPICall(userIpAddress).flatMap(response -> {
-            validationUtils.isAuthorizeToRegister(response.getCountry());
-            validatePassword(request.getPassword());
+        validationUtils.isAuthorizeToRegister(response.getCountry());
+        validateIfUserExists(request.getEmail());
+        validatePassword(request.getPassword());
 
-            var user = User.builder()
-                    .firstName(request.getFirstName())
-                    .lastName(request.getLastName())
-                    .email(request.getEmail())
-                    .password(passwordEncoder.encode(request.getPassword()))
-                    .role((Role.USER))
-                    .build();
-            userRepository.save(user);
-            var jwtToken = jwtService.generateToken(user);
+        var user = User.builder()
+                .firstName(request.getFirstName())
+                .lastName(request.getLastName())
+                .email(request.getEmail())
+                .password(passwordEncoder.encode(request.getPassword()))
+                .role((Role.USER))
+                .build();
+        userRepository.save(user);
+        var jwtToken = jwtService.generateToken(user);
 
-            return Mono.just(AuthenticationResponse.builder()
-                    .token(jwtToken)
-                    .build());
-        });
+        return AuthenticationResponse.builder()
+                .token(jwtToken)
+                .build();
 
     }
 
@@ -69,7 +67,13 @@ public class AuthenticationService {
 
     private void validatePassword(String password) {
         if (!passwordValidationService.isPasswordValid(password)) {
-            throw new InvalidPasswordRequirements("Invalid password requirements.");
+            throw new InvalidPasswordRequirementsException("Invalid password requirements.");
+        }
+    }
+
+    private void validateIfUserExists(String userEmail) {
+        if (userRepository.existsByEmail(userEmail)) {
+            throw new UserExistsException("This email is already taken.");
         }
     }
 

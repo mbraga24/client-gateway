@@ -12,11 +12,11 @@ import java.util.List;
 @RequestMapping(path = "api/v1/pnc")
 public class UserController {
 
-    private final UserService appUserService;
+    private final UserService userService;
 
     @GetMapping
-    public List<User> getAppUsers() {
-        return appUserService.getAllAppUsers();
+    public List<User> getAllUsers() {
+        return userService.getAllUsers();
     }
 
 }

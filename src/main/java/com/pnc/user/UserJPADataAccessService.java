@@ -12,8 +12,13 @@ public class UserJPADataAccessService implements UserDAO {
     private final UserRepository userRepository;
 
     @Override
-    public List<User> selectAllAppUsers() {
+    public List<User> getAllUsers() {
         return userRepository.findAll();
+    }
+
+    @Override
+    public boolean isEmailTaken(String email) {
+        return userRepository.existsByEmail(email);
     }
 
 }

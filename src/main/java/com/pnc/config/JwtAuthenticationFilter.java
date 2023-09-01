@@ -57,8 +57,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 //                    clientInfo.setClientIpAddress("100.42.20.0"); // "Canada"
                 } else {
                     clientIpAddress = ipAddresses.split(",")[0].trim();
-                    clientInfo.setClientIpAddress(clientIpAddress);
-//                    clientInfo.setClientIpAddress("100.42.20.0"); // "Canada"
+//                    clientInfo.setClientIpAddress(clientIpAddress);
+                    clientInfo.setClientIpAddress("100.42.20.0"); // "Canada"
                 }
             }
             filterChain.doFilter(request, response);

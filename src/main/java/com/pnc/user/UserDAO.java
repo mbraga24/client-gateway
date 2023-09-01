@@ -4,6 +4,8 @@ import java.util.List;
 
 public interface UserDAO {
 
-    List<User> selectAllAppUsers();
+    List<User> getAllUsers();
+
+    boolean isEmailTaken(String email);
 
 }
