@@ -4,11 +4,13 @@ import com.pnc.config.JwtService;
 import com.pnc.config.PasswordValidationService;
 import com.pnc.exception.custom.InvalidPasswordRequirementsException;
 import com.pnc.exception.custom.UserExistsException;
+import com.pnc.exception.custom.UserNotFoundException;
 import com.pnc.ipapi.IPApiResponse;
 import com.pnc.ipapi.IPApiService;
 import com.pnc.user.Role;
 import com.pnc.user.User;
 import com.pnc.user.UserRepository;
+import com.pnc.user.UserService;
 import com.pnc.utils.ValidationUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -58,7 +60,7 @@ public class AuthenticationService {
                 new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword())
         );
         var user = userRepository.findByEmail(request.getEmail())
-                .orElseThrow();
+                .orElseThrow(() -> new UserNotFoundException("The user %s could not be found".formatted(request.getEmail())));
         var jwtToken = jwtService.generateToken(user);
         return AuthenticationResponse.builder()
                 .token(jwtToken)
