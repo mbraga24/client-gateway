@@ -102,7 +102,7 @@ src/main/java/com/pnc
 
 ## Notes
 
-This project was built as a learning project to practice Spring Boot enterprise application development concepts, including authentication, authorization, JWT security, PostgreSQL integration, email services, validation, REST APIs, and layered application architecture.
+This project was built as a personal learning project to practice and strengthen skills acquired through professional software development experience and independent study. It applies industry-standard concepts such as authentication, authorization, JWT security, PostgreSQL integration, email services, validation, REST APIs, and layered application architecture in a real-world application. All implementation and design decisions were developed independently and do not include proprietary code, confidential information, or intellectual property from any employer or client engagement.
 
 ## Author
 
