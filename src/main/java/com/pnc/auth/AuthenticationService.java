@@ -10,10 +10,11 @@ import com.pnc.ipapi.IPApiService;
 import com.pnc.user.Role;
 import com.pnc.user.User;
 import com.pnc.user.UserRepository;
-import com.pnc.user.UserService;
 import com.pnc.utils.ValidationUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -31,11 +32,16 @@ public class AuthenticationService {
     private final PasswordValidationService passwordValidationService;
     private final IPApiService ipApiService;
     private final ValidationUtils validationUtils;
+    @Value("${app.geolocation.enabled}")
+    private boolean geolocationEnabled;
 
     public AuthenticationResponse register(RegisterRequest request, String userIpAddress) {
-        IPApiResponse response = ipApiService.ipAPICall(userIpAddress);
 
-        validationUtils.isAuthorizeToRegister(response.getCountry());
+        if (geolocationEnabled) {
+            IPApiResponse response = ipApiService.ipAPICall(userIpAddress);
+            validationUtils.isAuthorizeToRegister(response.getCountry());
+        }
+
         validateIfUserExists(request.getEmail());
         validatePassword(request.getPassword());
 
