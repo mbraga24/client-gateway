@@ -8,11 +8,11 @@
 		<version>3.1.2</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.pnc</groupId>
-	<artifactId>springPnc</artifactId>
+	<groupId>com.clienthub.gateway</groupId>
+	<artifactId>client-hub</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>springPnc</name>
-	<description>Demo project for Spring Boot</description>
+	<name>client-hub</name>
+	<description>Client management gateway application</description>
 	<properties>
 		<java.version>17</java.version>
 	</properties>
