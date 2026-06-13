@@ -5,15 +5,19 @@ server:
 
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/registration
-    username: marlondb
-    password: password
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/gateway_auth}
+    username: ${SPRING_DATASOURCE_USERNAME:gateway_svc}
+    password: ${SPRING_DATASOURCE_PASSWORD:gateway_pass}
 
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
         format_sql: true
     show-sql: false
+
+app:
+  geolocation:
+    enabled: true
